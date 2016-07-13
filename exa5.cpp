@@ -2,7 +2,7 @@
 * @Author: Zenith Dandelion
 * @Date:   2016-07-14 00:36:06
 * @Last Modified by:   Zenith Dandelion
-* @Last Modified time: 2016-07-14 00:39:56
+* @Last Modified time: 2016-07-14 00:44:41
 */
 
 #include <stdio.h>
@@ -47,6 +47,8 @@ int main()
 
 
 /*
+
+利用OpenMP，计算N!（绘制计算时长随N变化的曲线）。
 
 OUTPUT:
 

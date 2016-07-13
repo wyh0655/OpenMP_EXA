@@ -2,7 +2,7 @@
 * @Author: Zenith Dandelion
 * @Date:   2016-07-13 21:45:10
 * @Last Modified by:   Zenith Dandelion
-* @Last Modified time: 2016-07-13 21:51:00
+* @Last Modified time: 2016-07-14 00:44:03
 */
 
 
@@ -118,6 +118,8 @@ int main()
 
 
 /*
+
+利用OpenMP，A矩阵m×k，B矩阵k×n，求C=A×B
 
 OUTPUT:
 

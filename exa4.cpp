@@ -2,18 +2,26 @@
 * @Author: Zenith Dandelion
 * @Date:   2016-07-13 21:45:10
 * @Last Modified by:   Zenith Dandelion
-* @Last Modified time: 2016-07-14 00:44:03
+* @Last Modified time: 2016-07-14 01:47:14
 */
 
 
+#include <iostream>
 #include <stdio.h>
+#include <windows.h>
 #include <stdlib.h>
 #include <time.h>
 #include <omp.h>
 
+using namespace std;
+
 int matrix_A[10000][10000];
 int matrix_B[10000][10000];
 long long matrix_C[10000][10000];
+
+__int64 counter_begin;
+__int64 counter_end;
+__int64 diff;
 
 int main()
 {
@@ -21,8 +29,8 @@ int main()
     int i,j,k;
 
     // 矩阵大小，简单起见，m,p,n相等
-    printf("请输入0-10000的数字:\n");
-    scanf("%d",&n);
+    cout<<"请输入0-10000的数字: "<<endl;
+    cin>>n;
     m = p = n ;
 
     srand((unsigned)time(NULL));
@@ -41,7 +49,7 @@ int main()
     }
 
 
-    clock_t t1 = clock();
+    QueryPerformanceCounter((LARGE_INTEGER *)&counter_begin);
     for(int i = 0; i < m; i++)
     {
 
@@ -55,9 +63,13 @@ int main()
             matrix_C[i][j] = temp;
         }
     }
-    clock_t t2 = clock();
-    // OpenMP 
+    QueryPerformanceCounter((LARGE_INTEGER *)&counter_end);
+    diff=counter_end-counter_begin;
+    cout<<"普通计算时间 = "<<diff<<endl;
+
+    // OpenMP
     omp_set_num_threads(4);
+    QueryPerformanceCounter((LARGE_INTEGER *)&counter_begin);
 #pragma omp parallel shared(matrix_A,matrix_B,matrix_C) private(i,j,k)
 {
     #pragma omp for schedule(dynamic)
@@ -74,47 +86,47 @@ int main()
         }
     }
 }
-    clock_t t3 = clock();
-
-
-    printf("普通计算时间 = %ld\n并行计算时间 = %ld\n",t2-t1,t3-t2);
+    QueryPerformanceCounter((LARGE_INTEGER *)&counter_end);
+    diff=counter_end-counter_begin;
+    cout<<"并行计算时间 = "<<diff<<endl;
 
 
 /*
-    printf("\n\n\n\nA矩阵\n\n");
+    cout<<endl<<endl<<"A矩阵"<<endl;
     for(int i = 0; i < m; i++)
     {
         for(int j = 0; j < p; j++)
         {
-            printf("%d ",matrix_A[i][j]);
+//            printf("%d ",matrix_A[i][j]);
         }
-        printf("\n");
+//        printf("\n");
     }
 
-    printf("\n\n\n\nB矩阵\n\n");
+    cout<<endl<<endl<<"B矩阵"<<endl;
     for(int i = 0; i < p; i++)
     {
         for(int j = 0; j < n; j++)
         {
-            printf("%d ",matrix_B[i][j]);
+//            printf("%d ",matrix_B[i][j]);
         }
-        printf("\n");
+//        printf("\n");
     }
 
-    printf("\n\n\n\nC矩阵\n\n");
+    cout<<endl<<endl<<"C矩阵"<<endl;
     for(int i = 0; i < m; i++)
     {
         for(int j = 0; j < n; j++)
         {
-            printf("%ld ",matrix_C[i][j]);
+//            printf("%ld ",matrix_C[i][j]);
         }
-        printf("\n");
+//        printf("\n");
     }
-    printf("\n\n\n\nEND");
+    cout<<endl<<endl<<"END"<<endl;
 */
 
     return 0;
 }
+
 
 
 /*

@@ -2,7 +2,7 @@
 * @Author: Zenith Dandelion
 * @Date:   2016-07-13 21:45:10
 * @Last Modified by:   Zenith Dandelion
-* @Last Modified time: 2016-07-13 21:45:23
+* @Last Modified time: 2016-07-13 21:51:00
 */
 
 
@@ -20,12 +20,14 @@ int main()
     int m,p,n;
     int i,j,k;
 
+    // 矩阵大小，简单起见，m,p,n相等
     printf("请输入0-10000的数字:\n");
     scanf("%d",&n);
     m = p = n ;
 
     srand((unsigned)time(NULL));
 
+    // 随机生成矩阵
     for(int i = 0; i < m; i++)
     {
         for(int j = 0; j < p; j++)
@@ -54,6 +56,7 @@ int main()
         }
     }
     clock_t t2 = clock();
+    // OpenMP 
     omp_set_num_threads(4);
 #pragma omp parallel shared(matrix_A,matrix_B,matrix_C) private(i,j,k)
 {
